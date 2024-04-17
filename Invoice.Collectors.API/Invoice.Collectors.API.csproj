@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Invoice.Collectors.Infra.Data.Context\Invoice.Collectors.Infra.Data.Context.csproj" />
+      <ProjectReference Include="..\Invoice.Collectors.Infra.Data.Migrations\Invoice.Collectors.Infra.Data.Migrations.csproj" />
     </ItemGroup>
 
     <ItemGroup>

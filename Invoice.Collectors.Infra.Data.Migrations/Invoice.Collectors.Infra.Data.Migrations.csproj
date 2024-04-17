@@ -15,4 +15,16 @@
       <Folder Include="Migrations\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-preview.3.24172.4">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.0-preview.3.24172.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Invoice.Collectors.Infra.Data.Context\Invoice.Collectors.Infra.Data.Context.csproj" />
+    </ItemGroup>
+
 </Project>
