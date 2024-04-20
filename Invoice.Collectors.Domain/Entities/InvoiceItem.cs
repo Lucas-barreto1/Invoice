@@ -7,7 +7,11 @@ namespace Invoice.Collectors.Domain.Entities
         public int Quantity { get; set; }
         
         public Guid? ProductId { get; set; }
-        public virtual ICollection<Product>? Products { get; set; }
+        public Product Product { get; set; }
+        
+        public Guid? InvoiceId { get; set; }
+        
+        public Invoice Invoice { get; set; }
 
         public InvoiceItem() { }
 

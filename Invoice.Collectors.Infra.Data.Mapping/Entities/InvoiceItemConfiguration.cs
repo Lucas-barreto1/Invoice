@@ -15,9 +15,14 @@ namespace Invoice.Collectors.Infra.Data.Mapping.Entities
             builder.Property(x => x.Quantity)
                 .IsRequired(); 
 
-            builder.HasOne(x => x.Products)
+            builder.HasOne(x => x.Product)
                 .WithMany()
                 .HasForeignKey(x => x.ProductId)
+                .IsRequired();
+            
+            builder.HasOne(x => x.Invoice)
+                .WithMany() 
+                .HasForeignKey(x => x.InvoiceId)
                 .IsRequired();
         }
     }

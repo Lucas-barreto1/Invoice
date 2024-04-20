@@ -1,8 +1,8 @@
-﻿using Invoice.Collectors.Domain;
+﻿using Invoice.Collectors.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Invoice.Collectors.Infra.Data.Mapping;
+namespace Invoice.Collectors.Infra.Data.Mapping.Entities;
 
 public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {

@@ -6,11 +6,11 @@ namespace Invoice.Collectors.Domain.Entities
     {
        public DateTime IssueDate { get; set; }
        public double TotalAmount { get; set; }
-       public Guid? CustomerId { get; set; }
-       public virtual Customer? Customer { get; set; }
        
-       public Guid? InvoiceItemId { get; set; }
-       public virtual ICollection<InvoiceItem>? InvoiceItems { get; set; }
+       public Guid? CustomerId { get; set; }
+       public Customer? Customer { get; set; }
+       
+       public ICollection<InvoiceItem>? InvoiceItems { get; }
        
        
         public Invoice() { }

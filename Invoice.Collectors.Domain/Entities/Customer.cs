@@ -1,6 +1,6 @@
 using Invoice.Collectors.Domain.Entities.Base;
 
-namespace Invoice.Collectors.Domain
+namespace Invoice.Collectors.Domain.Entities
 {
     public class Customer : EntityBase
     {

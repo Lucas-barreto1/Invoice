@@ -1,4 +1,4 @@
-﻿using Invoice.Collectors.Domain;
+﻿using Invoice.Collectors.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

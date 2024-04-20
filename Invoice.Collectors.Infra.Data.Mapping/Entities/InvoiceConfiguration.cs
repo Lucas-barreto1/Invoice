@@ -1,5 +1,4 @@
-﻿using Invoice.Collectors.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Invoice.Collectors.Infra.Data.Mapping.Entities
@@ -22,11 +21,7 @@ namespace Invoice.Collectors.Infra.Data.Mapping.Entities
                 .WithMany() // Um cliente tem varias faturas
                 .HasForeignKey(x => x.CustomerId)
                 .IsRequired();
-
-            builder.HasOne(x => x.InvoiceItems)
-                .WithMany() // Uma fatura tem um varios items de fatura
-                .HasForeignKey(x => x.InvoiceItemId)
-                .IsRequired();
+            
         }
     }
 }
