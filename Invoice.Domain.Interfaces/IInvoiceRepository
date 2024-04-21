@@ -1,0 +1,5 @@
+﻿namespace Invoice.Collectors.Domain.Interfaces;
+
+public class Invoice
+{
+}

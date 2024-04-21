@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Invoice.API</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MediatR" Version="12.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-preview.3.24172.4">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Invoice.Domain.Interfaces\Invoice.Domain.Interfaces.csproj" />
+      <ProjectReference Include="..\Invoice.Infra.Data.Context\Invoice.Infra.Data.Context.csproj" />
+      <ProjectReference Include="..\Invoice.Infra.Data.Migrations\Invoice.Infra.Data.Migrations.csproj" />
+      <ProjectReference Include="..\Invoice.Infra.Data.Repository\Invoice.Infra.Data.Repository.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Invoice.API.http" />
+    </ItemGroup>
+
+</Project>
