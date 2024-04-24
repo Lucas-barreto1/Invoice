@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Invoice.Domain.Interfaces</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Invoice.Domain\Invoice.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="IInvoiceRepository" />
+    </ItemGroup>
+
+</Project>
