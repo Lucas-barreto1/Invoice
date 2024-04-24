@@ -1,5 +1,5 @@
-﻿using Invoice.Domain.Interfaces;
-using MediatR;
+﻿using Invoice.Core.Dtos;
+using Invoice.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Invoice.API.Controllers.Entities{ 
@@ -7,14 +7,10 @@ namespace Invoice.API.Controllers.Entities{
     [Route("invoice")]
     public class InvoiceController: Controller
     {
-        private readonly ILogger<InvoiceController> _logger;
-        private readonly IMediator _mediator;
         private readonly IInvoiceRepository _invoiceRepository;
         
-        public InvoiceController(ILogger<InvoiceController> logger, IMediator mediator, IInvoiceRepository invoiceRepository)
+        public InvoiceController(IInvoiceRepository invoiceRepository)
         {
-            _logger = logger;
-             _mediator = mediator;
             _invoiceRepository = invoiceRepository;
         }
         
@@ -29,7 +25,14 @@ namespace Invoice.API.Controllers.Entities{
         public async Task<IActionResult> GetInvoice(Guid id)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(id);
-            return Ok(invoice);
+            var invoiceDto = new InvoiceResponseDto
+            {
+                IssueDate = invoice.IssueDate,
+                TotalAmount = invoice.TotalAmount,
+                CustomerId = invoice.CustomerId,
+                InvoiceItemsIds = invoice.InvoiceItems.Select(i => i.Id).ToList()
+            };
+            return Ok(invoiceDto);
         }
         
         [HttpPost]
@@ -37,7 +40,7 @@ namespace Invoice.API.Controllers.Entities{
         {
             _invoiceRepository.Add(invoice);
             _invoiceRepository.Save();
-            return Ok();
+            return Ok(await _invoiceRepository.GetByIdAsync(invoice.Id));
         }
         
         [HttpPut]
@@ -45,7 +48,7 @@ namespace Invoice.API.Controllers.Entities{
         {
             _invoiceRepository.Update(invoice);
             _invoiceRepository.Save();
-            return Ok();
+            return Ok(await _invoiceRepository.GetByIdAsync(invoice.Id));
         }
         
         [HttpDelete("{id}")]

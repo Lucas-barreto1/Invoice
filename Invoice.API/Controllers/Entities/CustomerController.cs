@@ -8,14 +8,10 @@ namespace Invoice.API.Controllers.Entities{
     [Route("customer")]
     public class CustomerController : Controller
     {
-        private readonly ILogger<InvoiceController> _logger;
-        private readonly IMediator _mediator;
         private readonly ICustomerRepository _customerRepository;
         
-        public CustomerController(ILogger<InvoiceController> logger, IMediator mediator, ICustomerRepository customerRepository)
+        public CustomerController(ICustomerRepository customerRepository)
         {
-            _logger = logger;
-            _mediator = mediator;
             _customerRepository = customerRepository;
         }
         
@@ -38,7 +34,7 @@ namespace Invoice.API.Controllers.Entities{
         {
             _customerRepository.Add(customer);
             _customerRepository.Save();
-            return Ok();
+            return Ok(await _customerRepository.GetByIdAsync(customer.Id));
         }
         
         [HttpPut]
@@ -46,7 +42,7 @@ namespace Invoice.API.Controllers.Entities{
         {
             _customerRepository.Update(customer);
             _customerRepository.Save();
-            return Ok();
+            return Ok(await _customerRepository.GetByIdAsync(customer.Id));
         }
         
         [HttpDelete("{id}")]

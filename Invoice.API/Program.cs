@@ -1,3 +1,4 @@
+using System.Reflection;
 using Invoice.Context;
 using Invoice.Domain.Interfaces;
 using Invoice.Domain.Interfaces.Repositories;
@@ -62,9 +63,10 @@ namespace Invoice.API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             
-            // services.InstallIoC();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.InstallInvoiceContext(configuration);
         }
     }

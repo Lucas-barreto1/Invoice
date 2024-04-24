@@ -60,6 +60,9 @@ namespace Invoice.Migrations.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("InvoiceItemId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("timestamp with time zone");
 
