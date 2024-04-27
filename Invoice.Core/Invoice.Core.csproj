@@ -10,4 +10,8 @@
       <Compile Remove="Class1.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Invoice.Domain\Invoice.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
