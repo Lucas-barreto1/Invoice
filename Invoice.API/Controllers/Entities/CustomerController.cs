@@ -1,4 +1,5 @@
-﻿using Invoice.Domain.Entities;
+﻿using Invoice.Core.Dtos;
+using Invoice.Domain.Entities;
 using Invoice.Domain.Interfaces.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,39 +20,83 @@ namespace Invoice.API.Controllers.Entities{
         public async Task<IActionResult> GetCustomers()
         {
             var customers = await _customerRepository.GetAllAsync();
-            return Ok(customers);
+            var customerDtos = MapToCustomerResponseDtoList(customers);
+            return Ok(customerDtos);
         }
         
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomer(Guid id)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
-            return Ok(customer);
+            if (customer == null)
+                return NotFound();
+            var customerDto = MapToCustomerResponseDto(customer);
+            return Ok(customerDto);
         }
         
         [HttpPost]
-        public async Task<IActionResult> CreateCustomer([FromBody] Customer customer)
+        public async Task<IActionResult> CreateCustomer(CustomerDto customerDTO)
         {
+            var customer = MapToCustomer(customerDTO);
             _customerRepository.Add(customer);
             _customerRepository.Save();
-            return Ok(await _customerRepository.GetByIdAsync(customer.Id));
+            return CreatedAtAction(nameof(GetCustomer), new { id = customer.Id }, MapToCustomerResponseDto(customer));
         }
         
-        [HttpPut]
-        public async Task<IActionResult> UpdateCustomer([FromBody] Customer customer)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCustomer(Guid id, CustomerDto customerDTO)
         {
-            _customerRepository.Update(customer);
+            var existingCustomer = await _customerRepository.GetByIdAsync(id);
+            if(existingCustomer == null)
+                return NotFound();
+            
+            existingCustomer.Name = customerDTO.Name;
+            existingCustomer.Email = customerDTO.Email;
+            existingCustomer.Address = customerDTO.Address;
+            
+            _customerRepository.Update(existingCustomer);
             _customerRepository.Save();
-            return Ok(await _customerRepository.GetByIdAsync(customer.Id));
+            return Ok(MapToCustomerResponseDto(existingCustomer));
         }
+
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(Guid id)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
+            if (customer == null)
+                return NotFound();
             _customerRepository.Delete(customer);
             _customerRepository.Save();
-            return Ok();
+            return NoContent();
         }
+        
+        private CustomerResponseDto MapToCustomerResponseDto(Customer customer)
+        {
+            return new CustomerResponseDto
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                Email = customer.Email,
+                Address = customer.Address
+            };
+        }
+        
+        private Customer MapToCustomer(CustomerDto customerDto)
+        {
+            return new Customer
+            {
+                Id = customerDto.Id,
+                Name = customerDto.Name,
+                Email = customerDto.Email,
+                Address = customerDto.Address
+            };
+        }
+        
+        private List<CustomerResponseDto> MapToCustomerResponseDtoList(IEnumerable<Customer> customers)
+        {
+            return customers.Select(MapToCustomerResponseDto).ToList();
+        }
+        
     }
 }
