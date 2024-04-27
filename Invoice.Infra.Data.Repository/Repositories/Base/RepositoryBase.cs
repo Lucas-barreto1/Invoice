@@ -13,7 +13,7 @@ public abstract class RepositoryBase<TEntity>(InvoiceContext context): IReposito
     
     public void Add(TEntity entity) => _dbSet.Add(entity);
     
-    public async Task<TEntity?> GetByIdAsync(
+    public virtual async Task<TEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default
     )
@@ -21,7 +21,7 @@ public abstract class RepositoryBase<TEntity>(InvoiceContext context): IReposito
             .Where(e => e.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
     
-    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _dbSet.ToListAsync(cancellationToken);
     
     public void Update(TEntity entity)
@@ -36,5 +36,5 @@ public abstract class RepositoryBase<TEntity>(InvoiceContext context): IReposito
     public void Delete(TEntity entity) => _dbSet.Remove(entity);
     
     public int Save() => _context.SaveChanges();
-   
+    
 }
