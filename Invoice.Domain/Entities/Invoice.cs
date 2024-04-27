@@ -10,7 +10,7 @@ namespace Invoice.Domain.Entities
        public Guid? CustomerId { get; set; }
        public Customer? Customer { get; set; }
        
-       public ICollection<InvoiceItem>? InvoiceItems { get; private set; }
+       public ICollection<InvoiceItem> InvoiceItems { get; private set; } = new List<InvoiceItem>();
        
        
         public Invoice() { }
@@ -22,29 +22,18 @@ namespace Invoice.Domain.Entities
         
         public void addInvoiceItem(Product product, int quantity)
         {
-            if (InvoiceItems == null)
-            {
-                InvoiceItems = new List<InvoiceItem>();
-            }
-            
-            InvoiceItems.Add(new InvoiceItem(quantity, product));
+            InvoiceItems.Add(new InvoiceItem(quantity, product, this));
+            updateTotalAmount();
         }
         
         public void removeInvoiceItem(InvoiceItem invoiceItem)
         {
-            if (InvoiceItems == null)
-            {
-                return;
-            }
             InvoiceItems.Remove(invoiceItem);
+            updateTotalAmount();
         }
         
         private void updateTotalAmount()
         {
-            if (InvoiceItems == null)
-            {
-                return;
-            }
             TotalAmount = InvoiceItems.Sum(i => i.Quantity * i.Product.Price);
         }
     }
