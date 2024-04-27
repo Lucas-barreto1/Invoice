@@ -15,10 +15,11 @@ namespace Invoice.Domain.Entities
 
         public InvoiceItem() { }
 
-        public InvoiceItem(int quantity, Product product)
+        public InvoiceItem(int quantity, Product product, Invoice invoice)
         {
             Quantity = quantity;
             Product = product;
+            Invoice = invoice;
         }
     }
 }
