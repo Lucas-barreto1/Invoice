@@ -89,7 +89,13 @@ namespace Invoice.API.Controllers.Entities{
                 CustomerId = invoice.CustomerId,
                 InvoiceItems = invoice.InvoiceItems.Select(i => new InvoiceItemResponseDto
                 {
-                    Product = i.Product,
+                    Id = i.Id,
+                    Product = new ProductResponseDto()
+                    {
+                        Id = i.Product.Id,
+                        Name = i.Product.Name,
+                        Price = i.Product.Price
+                    },
                     Quantity = i.Quantity
                 }).ToList()
             };
