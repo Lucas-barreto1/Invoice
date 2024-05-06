@@ -21,7 +21,7 @@ namespace Invoice.Infra.Data.Mapping.Entities
                 .IsRequired();
             
             builder.HasOne(x => x.Invoice)
-                .WithMany() 
+                .WithMany(i => i.InvoiceItems)
                 .HasForeignKey(x => x.InvoiceId)
                 .IsRequired();
         }

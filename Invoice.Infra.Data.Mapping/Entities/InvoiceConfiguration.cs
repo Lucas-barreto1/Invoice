@@ -20,7 +20,7 @@ namespace Invoice.Infra.Data.Mapping.Entities
                 .IsRequired();
 
             builder.HasOne(x => x.Customer)
-                .WithMany() // Um cliente tem varias faturas
+                .WithMany(c => c.Invoices) // Um cliente tem varias faturas
                 .HasForeignKey(x => x.CustomerId)
                 .IsRequired();
             

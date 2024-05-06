@@ -3,6 +3,7 @@ using System;
 using Invoice.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Invoice.Migrations.Migrations
 {
     [DbContext(typeof(InvoiceContext))]
-    partial class InvoiceContextModelSnapshot : ModelSnapshot
+    [Migration("20240506183548_relacaoCustomerInvoice")]
+    partial class relacaoCustomerInvoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,6 +85,9 @@ namespace Invoice.Migrations.Migrations
                     b.Property<Guid>("InvoiceId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("InvoiceId1")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
 
@@ -91,6 +97,8 @@ namespace Invoice.Migrations.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId");
+
+                    b.HasIndex("InvoiceId1");
 
                     b.HasIndex("ProductId");
 
@@ -131,10 +139,14 @@ namespace Invoice.Migrations.Migrations
             modelBuilder.Entity("Invoice.Domain.Entities.InvoiceItem", b =>
                 {
                     b.HasOne("Invoice.Domain.Entities.Invoice", "Invoice")
-                        .WithMany("InvoiceItems")
+                        .WithMany()
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Invoice.Domain.Entities.Invoice", null)
+                        .WithMany("InvoiceItems")
+                        .HasForeignKey("InvoiceId1");
 
                     b.HasOne("Invoice.Domain.Entities.Product", "Product")
                         .WithMany()

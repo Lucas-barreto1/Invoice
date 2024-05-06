@@ -7,6 +7,7 @@ namespace Invoice.Domain.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
+        public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
         public Customer()
         {

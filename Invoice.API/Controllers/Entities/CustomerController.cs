@@ -24,6 +24,13 @@ namespace Invoice.API.Controllers.Entities{
             return Ok(customerDtos);
         }
         
+        [HttpGet("{id}/products")]
+        public async Task<IActionResult> GetProductsByCustomerId(Guid id)
+        {
+            var products = await _customerRepository.GetProductsByCustomerId(id);
+            return Ok(products);
+        }
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomer(Guid id)
         {
