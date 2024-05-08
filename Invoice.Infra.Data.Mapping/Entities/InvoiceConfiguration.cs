@@ -19,6 +19,14 @@ namespace Invoice.Infra.Data.Mapping.Entities
             builder.Property(x => x.TotalAmount)
                 .IsRequired();
 
+            builder.Property(x => x.CustomerId)
+                .IsRequired();
+            
+            builder.HasMany(x => x.InvoiceItems)
+                .WithOne(c => c.Invoice)
+                .HasForeignKey(x => x.InvoiceId)
+                .IsRequired();
+
             builder.HasOne(x => x.Customer)
                 .WithMany(c => c.Invoices) // Um cliente tem varias faturas
                 .HasForeignKey(x => x.CustomerId)

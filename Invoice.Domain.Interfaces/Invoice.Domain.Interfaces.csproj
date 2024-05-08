@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Invoice.Core\Invoice.Core.csproj" />
       <ProjectReference Include="..\Invoice.Domain\Invoice.Domain.csproj" />
     </ItemGroup>
 

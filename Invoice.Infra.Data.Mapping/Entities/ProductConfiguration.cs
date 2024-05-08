@@ -19,5 +19,10 @@ public class ProductConfiguration: IEntityTypeConfiguration<Product>
 
         builder.Property(x => x.Price)
             .IsRequired();
+        
+        builder.HasMany(x => x.InvoiceItems)
+            .WithOne(i => i.Product)
+            .HasForeignKey(x => x.ProductId)
+            .IsRequired();
     }
 }

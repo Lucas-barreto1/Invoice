@@ -1,4 +1,5 @@
 ﻿using Invoice.Context;
+using Invoice.Core.Dtos;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Interfaces.Repositories;
 using Invoice.Infra.Data.Repository.Repositories.Base;
@@ -12,14 +13,18 @@ public class CustomerRepository: RepositoryBase<Customer>, ICustomerRepository
     {
     }
     
-    public async Task<IEnumerable<Product>> GetProductsByCustomerId(Guid customerId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ProductsByCustomerResponseDto>> GetProductsByCustomerId(Guid customerId, CancellationToken cancellationToken = default)
     {
-        return await _context.Customers
-            .Where(c => c.Id == customerId)
-            .Include(c => c.Invoices)
-            .ThenInclude(i => i.InvoiceItems)
-            .ThenInclude(ii => ii.Product)
-            .SelectMany(c => c.Invoices.SelectMany(i => i.InvoiceItems.Select(ii => ii.Product)))
+       return await _context.Customers
+            .Where(x => x.Id == customerId)
+            .Include(x => x.Invoices)
+            .ThenInclude(x => x.InvoiceItems)
+            .ThenInclude(x => x.Product)
+            .Select(x => new ProductsByCustomerResponseDto
+            {
+                CustomerName = x.Name,
+                ProductsNames = x.Invoices.SelectMany(x => x.InvoiceItems).Select(x => x.Product.Name).ToList()
+            })
             .ToListAsync(cancellationToken);
     }
 }

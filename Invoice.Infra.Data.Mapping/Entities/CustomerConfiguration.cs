@@ -26,5 +26,10 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
             .IsUnicode()
             .IsRequired()
             .HasMaxLength(200);
+        
+        builder.HasMany(x => x.Invoices)
+            .WithOne(c => c.Customer) 
+            .HasForeignKey(x => x.CustomerId)
+            .IsRequired();
     }
 }

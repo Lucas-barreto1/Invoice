@@ -7,8 +7,8 @@ namespace Invoice.Domain.Entities
        public DateTime IssueDate { get; set; }
        public double TotalAmount { get; set; }
        
-       public Guid? CustomerId { get; set; }
-       public Customer? Customer { get; set; }
+       public Guid CustomerId { get; set; }
+       public Customer Customer { get; set; }
        
        public ICollection<InvoiceItem> InvoiceItems { get; private set; } = new List<InvoiceItem>();
        

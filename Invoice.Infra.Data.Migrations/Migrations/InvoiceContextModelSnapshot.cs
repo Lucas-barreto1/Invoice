@@ -137,7 +137,7 @@ namespace Invoice.Migrations.Migrations
                         .IsRequired();
 
                     b.HasOne("Invoice.Domain.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("InvoiceItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -153,6 +153,11 @@ namespace Invoice.Migrations.Migrations
                 });
 
             modelBuilder.Entity("Invoice.Domain.Entities.Invoice", b =>
+                {
+                    b.Navigation("InvoiceItems");
+                });
+
+            modelBuilder.Entity("Invoice.Domain.Entities.Product", b =>
                 {
                     b.Navigation("InvoiceItems");
                 });
